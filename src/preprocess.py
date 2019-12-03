@@ -110,7 +110,7 @@ class Preprocess:
             	img_resize = cv2.resize(img_array_rgb, (IMG_SIZE, IMG_SIZE))
             	all_data.append([img_resize, image_predict_label[img]])
 
-        for img, value in all_data:
+    	for img, value in all_data:
         	img_flip = cv2.flip(img, 1)
         	img_random_crop = get_random_crop(img, IMG_SIZE * 0.8, IMG_SIZE * 0.8)
         	img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
@@ -128,7 +128,7 @@ class Preprocess:
         	self.label.append(float(value[1]))
         	self.label.append(float(value[1]))
 
-         return all_data
+        return all_data
 
     def get_random_crop(image, crop_height, crop_width):
     	max_x = image.shape[1] - crop_width
