@@ -23,8 +23,7 @@ class Preprocess:
 		self.batch_size = batch_size
 		self.size = len(self.list_img)
 		self.num_batch = self.size // batch_size
-		# read text file to data
-		# self.data = 
+		
 
 	# will be called once an epoch
 	def shuffle_data(self):
