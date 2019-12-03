@@ -27,7 +27,7 @@ class Preprocess:
 		np.random.shuffle(self.all_data)
 		for img, value in self.all_data:
 			img_flip = cv2.flip(img, 1)
-			img_random_crop = get_random_crop(img, IMG_SIZE * 0.8, IMG_SIZE * 0.8)
+			img_random_crop = get_random_crop(img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
 			img_gaussian = cv2.GaussianBlur(img, (3, 3), cv2.BORDER_DEFAULT)
 			self.X.append(img)
@@ -45,22 +45,22 @@ class Preprocess:
 
 
 	def create_batch(self, dataset='train', step = 0):
-		if step % (self.num_batch * 0.8) == 0:
+		if step % (self.num_batch * 8 // 10) == 0:
 			self.X = []
 			self.predict = []
 			self.label = []
 			self.shuffle_data()
 
-		batch_idx = step % (self.num_batch * 0.8)
-		training_img = self.X[: self.size * 0.8]
-		training_predict = self.predict[: self.size * 0.8]
-		testing_label = self.label[: self.size * 0.8]
-		testing_img = self.X[self.size * 0.8:]
-		testing_predict = self.predict[self.size * 0.8:]
-		testing_label = self.label[self.size * 0.8:]
+		batch_idx = step % (self.num_batch * 8 // 10)
+		training_img = self.X[: self.size * 8 // 10]
+		training_predict = self.predict[: self.size * 8 // 10]
+		training_label = self.label[: self.size * 8 // 10]
+		testing_img = self.X[self.size * 8 // 10:]
+		testing_predict = self.predict[self.size * 8 // 10:]
+		testing_label = self.label[self.size * 8 // 10:]
 
 		if dataset == 'train':
-			if batch_idx == self.num_batch * 0.8:
+			if batch_idx == self.num_batch * 8 // 10:
 				batch_img = training_img[batch_idx*self.batch_size:]
 				batch_predict = training_predict[batch_idx*self.batch_size:]
 				batch_label = training_label[batch_idx*self.batch_size:]
