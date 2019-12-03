@@ -28,7 +28,7 @@ class Preprocess:
 	# will be called once an epoch
 	def shuffle_data(self):
 		np.random.shuffle(self.all_data)
-    	for img, value in self.all_data:
+		for img, value in self.all_data:
         	img_flip = cv2.flip(img, 1)
         	img_random_crop = get_random_crop(img, IMG_SIZE * 0.8, IMG_SIZE * 0.8)
         	img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
@@ -103,14 +103,14 @@ class Preprocess:
 		f.close()
 
 		all_data = []
-    	for img in os.listdir(self.image_dir):
+		for img in os.listdir(self.image_dir):
         	if os.path.splitext(img)[-1] == ".png":
             	img_array_bgr = cv2.imread(os.path.join(image_dir, img))
             	img_array_rgb = img_array_bgr[:, :, ::-1]
             	img_resize = cv2.resize(img_array_rgb, (IMG_SIZE, IMG_SIZE))
             	all_data.append([img_resize, image_predict_label[img]])
 
-    	for img, value in all_data:
+		for img, value in all_data:
         	img_flip = cv2.flip(img, 1)
         	img_random_crop = get_random_crop(img, IMG_SIZE * 0.8, IMG_SIZE * 0.8)
         	img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
