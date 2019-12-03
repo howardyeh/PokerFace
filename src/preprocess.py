@@ -109,7 +109,7 @@ class Preprocess:
 
 		for img, value in all_data:
 			img_flip = cv2.flip(img, 1)
-			img_random_crop = get_random_crop(img, IMG_SIZE * 0.8, IMG_SIZE * 0.8)
+			img_random_crop = get_random_crop(img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
 			img_gaussian = cv2.GaussianBlur(img, (3, 3), cv2.BORDER_DEFAULT)
 			self.X.append(img)
