@@ -91,7 +91,7 @@ class Preprocess:
 			return batch_img, batch_predict, batch_label
 
 	def creat_all_data(self):
-		f = open(text_dir, "r")
+		f = open(self.text_dir, "r")
 		image_predict_label = {}
 		for line in f:
 			line = line.strip('\n')
@@ -102,7 +102,7 @@ class Preprocess:
 		all_data = []
 		for img in os.listdir(self.image_dir):
 			if os.path.splitext(img)[-1] == ".png":
-				img_array_bgr = cv2.imread(os.path.join(image_dir, img))
+				img_array_bgr = cv2.imread(os.path.join(self.image_dir, img))
 				img_array_rgb = img_array_bgr[:, :, ::-1]
 				img_resize = cv2.resize(img_array_rgb, (IMG_SIZE, IMG_SIZE))
 				all_data.append([img_resize, image_predict_label[img]])
