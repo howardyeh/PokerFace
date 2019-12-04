@@ -28,14 +28,11 @@ class Preprocess:
 		for img, value in self.all_data:
 			img_flip = tf.image.random_flip_left_right(img, seed=1284)
 			img_flip = np.array(img_flip)
-			img_flip = cv2.resize(img_flip, (IMG_SIZE, IMG_SIZE))
 			img_random_crop = self.get_random_crop(img_flip, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
 			img_random_bright = tf.image.random_brightness(img_random_crop, max_delta=0.5)
 			img_random_bright = np.array(img_random_bright)
 			self.X.append(img)
-			# self.X.append(img_flip)
-			# self.X.append(img_random_crop)
 			self.X.append(img_random_bright)
 			self.predict.append(float(value[0]))
 			self.predict.append(float(value[0]))
@@ -76,9 +73,6 @@ class Preprocess:
 			return batch_img, batch_predict, batch_label
 
 		if dataset == 'test':
-			# if step > self.num_batch * 0.2:
-			# 	return None, None, None
-
 			batch_img = testing_img[step * self.batch_size: (step + 1) * self.batch_size]
 			batch_predict = testing_predict[step * self.batch_size: (step + 1) * self.batch_size]
 			batch_label = testing_label[step * self.batch_size: (step + 1) * self.batch_size]
@@ -109,14 +103,11 @@ class Preprocess:
 		for img, value in all_data:
 			img_flip = tf.image.random_flip_left_right(img, seed=1284)
 			img_flip = np.array(img_flip)
-			img_flip = cv2.resize(img_flip, (IMG_SIZE, IMG_SIZE))
 			img_random_crop = self.get_random_crop(img_flip, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
 			img_random_bright = tf.image.random_brightness(img_random_crop, max_delta=0.5)
 			img_random_bright = np.array(img_random_bright)
 			self.X.append(img)
-			# self.X.append(img_flip)
-			# self.X.append(img_random_crop)
 			self.X.append(img_random_bright)
 			self.predict.append(float(value[0]))
 			self.predict.append(float(value[0]))
