@@ -28,6 +28,7 @@ class Preprocess:
 		for img, value in self.all_data:
 			img_flip = tf.image.random_flip_left_right(img, seed=1284)
 			img_flip = np.array(img_flip)
+			img_flip = cv2.resize(img_flip, (IMG_SIZE, IMG_SIZE))
 			img_random_crop = self.get_random_crop(img_flip, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
 			img_random_bright = tf.image.random_brightness(img_random_crop, max_delta=0.5)
@@ -108,6 +109,7 @@ class Preprocess:
 		for img, value in all_data:
 			img_flip = tf.image.random_flip_left_right(img, seed=1284)
 			img_flip = np.array(img_flip)
+			img_flip = cv2.resize(img_flip, (IMG_SIZE, IMG_SIZE))
 			img_random_crop = self.get_random_crop(img_flip, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
 			img_random_bright = tf.image.random_brightness(img_random_crop, max_delta=0.5)
