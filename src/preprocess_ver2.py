@@ -62,19 +62,28 @@ class Preprocess:
 			print("batch_label shape = ", batch_label.shape)
 			return batch_img, batch_predict, batch_label
 
-		# if dataset == 'test':
-		# 	# if step > self.num_batch * 0.2:
-		# 	# 	return None, None, None
+		if dataset == 'test':
+			batch_img = self.valid_data[step * self.batch_size][0]
+			batch_img = cv2.resize(batch_img, (IMG_SIZE, IMG_SIZE))
+			batch_img = np.expand_dims(batch_img, axis=0)
+			batch_predict = self.valid_data[step * self.batch_size][1]
+			batch_predict = np.expand_dims(batch_predict, axis=0)
+			batch_label = self.valid_data[step * self.batch_size][2]
+			batch_label = np.expand_dims(batch_label, axis=0)
 
-		# 	batch_img = testing_img[step * self.batch_size: (step + 1) * self.batch_size]
-		# 	batch_predict = testing_predict[step * self.batch_size: (step + 1) * self.batch_size]
-		# 	batch_label = testing_label[step * self.batch_size: (step + 1) * self.batch_size]
-
-		# 	batch_img = np.array(batch_img).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
-		# 	batch_predict = np.array(batch_predict)
-		# 	batch_label = np.array(batch_label)
+			for i in range(step*self.batch_size+1, step*self.batch_size + self.batch_size):
+				temp_img = self.valid_data[i][0]
+				temp_img = cv2.resize(temp_img, (IMG_SIZE, IMG_SIZE))
+				temp_img = np.expand_dims(temp_img, axis=0)
+				batch_img = np.append(batch_img, temp_img, axis = 0)
+				temp_predict = self.valid_data[i][1]
+				temp_predict = np.expand_dims(temp_predict, axis=0)
+				batch_predict = np.append(batch_predict, temp_predict, axis = 0)
+				temp_label = self.valid_data[i][2]
+				temp_label = np.expand_dims(temp_label, axis=0)
+				batch_label = np.append(batch_label, temp_label, axis = 0)
 			
-		# 	return batch_img, batch_predict, batch_label
+			return batch_img, batch_predict, batch_label
 
 	def creat_all_data(self):
 		f = open(self.text_dir, "r")

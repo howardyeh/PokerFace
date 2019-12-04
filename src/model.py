@@ -131,7 +131,7 @@ class Model(object):
                 # Validate every 10 epoch
                 if self.epoch % 10 == 0:
                     validation_total_loss = 0
-                    for val_step in range(valid_data_num / batch_size):
+                    for val_step in range(int(valid_data_num / batch_size)):
                         val_image_batch, val_expectation_batch, val_gt_batch = dataloader.create_batch(val_step, 'validation')
                         valid_loss = sess.run(total_loss['prob_loss'], feed_dict = {image: val_image_batch, expectation: val_expectation_batch, groundtruth: val_gt_batch})
                         validation_total_loss += valid_loss
