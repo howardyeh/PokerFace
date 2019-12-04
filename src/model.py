@@ -64,6 +64,7 @@ class Model(object):
     def train(self, checkpoints=None):
         
         image = tf.placeholder(tf.float32, [None, 224, 224, 3])
+        image = tf.image.random_brightness(image, max_delta=0.5)
         image_tb = tf.summary.image("image", image, max_outputs=2)
         expectation = tf.placeholder(tf.float32, [None, 1])
         groundtruth = tf.placeholder(tf.float32, [None, 1])

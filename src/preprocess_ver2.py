@@ -34,6 +34,7 @@ class Preprocess:
 
 			step_in_epoch = step % (self.steps_per_epoch)
 			batch_img = self.train_data[step_in_epoch * self.batch_size][0]
+			batch_img = self.random_flip(batch_img)
 			batch_img = cv2.resize(batch_img, (IMG_SIZE, IMG_SIZE))
 			batch_img = self.get_random_crop(batch_img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			batch_img = cv2.resize(batch_img, (IMG_SIZE, IMG_SIZE))
@@ -45,6 +46,7 @@ class Preprocess:
 
 			for i in range(step_in_epoch*self.batch_size+1, step_in_epoch*self.batch_size + self.batch_size):
 				temp_img = self.train_data[i][0]
+				temp_img = self.random_flip(temp_img)
 				temp_img = cv2.resize(temp_img, (IMG_SIZE, IMG_SIZE))
 				temp_img = self.get_random_crop(temp_img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 				temp_img = cv2.resize(temp_img, (IMG_SIZE, IMG_SIZE))
@@ -118,5 +120,12 @@ class Preprocess:
 		crop = image[y: y + crop_height, x: x + crop_width]
 
 		return crop
+
+	def random_flip(self, image):
+		flip = random.randint(0, 2)
+		if flip == 1:
+			return image
+		else:
+			return cv2.flip(image, 1)
 
 	
