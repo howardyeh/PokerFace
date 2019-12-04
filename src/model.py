@@ -15,7 +15,7 @@ train_data_num = total_data_num * 0.7
 valid_data_num = total_data_num - train_data_num
 batch_size = 10
 steps_per_epoch = train_data_num / batch_size
-train_total_step = training_epoch * (steps_per_epoch)
+train_total_step = int(training_epoch * (steps_per_epoch))
 
 # Training schedule
 training_schedule = {
