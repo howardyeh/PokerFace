@@ -26,14 +26,14 @@ class Preprocess:
 	def shuffle_data(self):
 		np.random.shuffle(self.all_data)
 		for img, value in self.all_data:
-			img_flip = cv2.flip(img, 1)
-			img_random_crop = get_random_crop(img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
+			img_flip = tf.image.random_flip_left_right(img, seed=1284)
+			img_random_crop = self.get_random_crop(img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
-			img_gaussian = cv2.GaussianBlur(img, (3, 3), cv2.BORDER_DEFAULT)
+			img_random_bright = tf.image.random_brightness(img_resize, max_delta=0.5)
 			self.X.append(img)
 			self.X.append(img_flip)
 			self.X.append(img_random_crop)
-			self.X.append(img_gaussian)
+			self.X.append(img_random_bright)
 			self.predict.append(float(value[0]))
 			self.predict.append(float(value[0]))
 			self.predict.append(float(value[0]))
@@ -108,14 +108,14 @@ class Preprocess:
 				all_data.append([img_resize, image_predict_label[img]])
 
 		for img, value in all_data:
-			img_flip = cv2.flip(img, 1)
-			img_random_crop = get_random_crop(img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
+			img_flip = tf.image.random_flip_left_right(img, seed=1284)
+			img_random_crop = self.get_random_crop(img, int(IMG_SIZE * 0.8), int(IMG_SIZE * 0.8))
 			img_random_crop = cv2.resize(img_random_crop, (IMG_SIZE, IMG_SIZE))
-			img_gaussian = cv2.GaussianBlur(img, (3, 3), cv2.BORDER_DEFAULT)
+			img_random_bright = tf.image.random_brightness(img_resize, max_delta=0.5)
 			self.X.append(img)
 			self.X.append(img_flip)
 			self.X.append(img_random_crop)
-			self.X.append(img_gaussian)
+			self.X.append(img_random_bright)
 			self.predict.append(float(value[0]))
 			self.predict.append(float(value[0]))
 			self.predict.append(float(value[0]))
@@ -127,7 +127,7 @@ class Preprocess:
 
 		return all_data
 
-	def get_random_crop(image, crop_height, crop_width):
+	def get_random_crop(self, image, crop_height, crop_width):
 		max_x = image.shape[1] - crop_width
 		max_y = image.shape[0] - crop_height
 
