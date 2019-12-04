@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.contrib.slim import nets
-from preprocess import Preprocess 
+# from preprocess import Preprocess 
+from preprocess_ver2 import Preprocess
 slim = tf.contrib.slim
  
 # File Path
