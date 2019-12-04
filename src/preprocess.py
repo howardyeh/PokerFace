@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os 
 import cv2
 import random
-import pickle 
+import tensorflow as tf 
 
 
 IMG_SIZE = 128
