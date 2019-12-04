@@ -3,6 +3,10 @@ from tensorflow.contrib.slim import nets
 from preprocess import Preprocess 
 slim = tf.contrib.slim
  
+# File Path
+label_file_dir = "./../../label.txt"
+image_file_dir = "./../../image/"
+
 
 # Parameter setup 
 training_epoch = 100
@@ -14,7 +18,7 @@ steps_per_epoch = train_data_num / batch_size
 train_total_step = training_epoch * (steps_per_epoch)
 
 # Training schedule
-LONG_SCHEDULE = {
+training_schedule = {
     'step_values': [1050, 1470, 1680, 1890], # 50ep, 70ep, 80ep, 90ep 
     'learning_rates': [0.001, 0.0005, 0.00025, 0.000125, 0.0000625],
     'momentum': 0.9,
@@ -47,7 +51,7 @@ class Model(object):
         # The weighting between expectation and prediction need to be tuned
         logits = 0.5 * prediction + 0.5 * expectation
         prob_loss = tf.nn.l2_loss(groundtruth - logits)
-        slim.losses.add_loss(l2_loss)
+        slim.losses.add_loss(prob_loss)
         loss = slim.losses.get_total_loss()
         loss_dict = {'prob_loss': prob_loss,'loss': loss}
         return loss_dict
@@ -66,7 +70,7 @@ class Model(object):
 
         self.learning_rate = tf.train.piecewise_constant(
             self.global_step,
-            [tf.cast(v, tf.int64) for v in training_schedule['step_values']],
+            [tf.cast(v, tf.int32) for v in training_schedule['step_values']],
             training_schedule['learning_rates'])
         optimizer = tf.train.AdamOptimizer(
             self.learning_rate,
@@ -91,12 +95,12 @@ class Model(object):
 
 
         train_op = slim.learning.create_train_op(
-            total_loss,
+            total_loss['loss'],
             optimizer,
             summarize_gradients=True)
 
 
-        dataloader = Preprocess("./../text.txt", "./../image/", batch_size)
+        dataloader = Preprocess(label_file_dir, image_file_dir, batch_size)
 
         with tf.Session() as sess:
             # merged = tf.summary.merge_all()
