@@ -64,6 +64,7 @@ class Model(object):
     def train(self, checkpoints=None):
         
         image = tf.placeholder(tf.float32, [None, 224, 224, 3])
+        val_image = tf.placeholder(tf.float32, [None, 224, 224, 3])
         image = tf.image.random_brightness(image, max_delta=0.5)
         image_tb = tf.summary.image("image", image, max_outputs=2)
         expectation = tf.placeholder(tf.float32, [None, 1])
@@ -83,6 +84,8 @@ class Model(object):
         prediction = self.predict(image)
         total_loss = self.loss(prediction, expectation, groundtruth)
         loss_tb = tf.summary.scalar('loss', total_loss['loss'])
+        val_prediction = self.predict(val_image)
+        val_total_loss = self.loss(val_prediction, expectation, groundtruth)
 
 
         # for recording validation loss
@@ -134,7 +137,7 @@ class Model(object):
                     validation_total_loss = 0
                     for val_step in range(int(valid_data_num / batch_size)):
                         val_image_batch, val_expectation_batch, val_gt_batch = dataloader.create_batch(val_step, 'validation')
-                        valid_loss = sess.run(total_loss['prob_loss'], feed_dict = {image: val_image_batch, expectation: val_expectation_batch, groundtruth: val_gt_batch})
+                        valid_loss = sess.run(val_total_loss['prob_loss'], feed_dict = {val_image: val_image_batch, expectation: val_expectation_batch, groundtruth: val_gt_batch})
                         validation_total_loss += valid_loss
                     validation_total_loss /= (valid_data_num / batch_size)
                     print('Save validation loss to Tensorboard...')

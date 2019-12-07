@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import os 
 import cv2
 import random
+# import sys
+# print(sys.path)
+# sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
 
 IMG_SIZE = 224
@@ -64,7 +67,7 @@ class Preprocess:
 			print("batch_label shape = ", batch_label.shape)
 			return batch_img, batch_predict, batch_label
 
-		if dataset == 'test':
+		if dataset == 'validation':
 			batch_img = self.valid_data[step * self.batch_size][0]
 			batch_img = cv2.resize(batch_img, (IMG_SIZE, IMG_SIZE))
 			batch_img = np.expand_dims(batch_img, axis=0)
