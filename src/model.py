@@ -16,7 +16,7 @@ dataloader = Preprocess(label_file_dir, image_file_dir, batch_size)
 
 training_epoch = 5000
 total_data_num = dataloader.total_data_num
-train_data_num = total_data_num * 0.7
+train_data_num = int(total_data_num * 0.75)
 valid_data_num = total_data_num - train_data_num
 steps_per_epoch = train_data_num / batch_size
 train_total_step = int(training_epoch * (steps_per_epoch))
@@ -120,7 +120,7 @@ class Model(object):
             sess.run(tf.global_variables_initializer())
 
             if checkpoints:
-                saver.restore(sess, "logs/weighting.ckpt")
+                saver.restore(sess, "~/Documents/Deeplens_Hackathon/pretrain_weight/resnet_v1_50.ckpt")
             
 
             for step in range( train_total_step ):
