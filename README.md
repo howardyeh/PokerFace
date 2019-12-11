@@ -18,6 +18,15 @@ First, the lambda function on deeplens will keep detecting face and predict the 
 
 The other lambda function will be triggered when we publish the expected winning rate. This serve as a starting sign that tells deeplens that we want to calculate the current winning rate for the opponent. The lambda function will retrieve the value from S3 and use the expected winning rate to calculate a weighted final prediction and then publish the result.
 
+Steps
+---
+Step 0 Install tensorflow on deeplens.
+Step 1 Created a project on deeplens and use pre-trained face-detection model as imported model and created lambda function  called deeplens_face_detection_and_pokerface.py using the python file in github repository /lambda_function.  
+Step 2 Put frozen_model.pb in S3 and copy the path and put in deeplens_face_detection_and_pokerface.py.
+Step 3 Created a lambda function called calculated.py triggered by pubished topic /expectation and this function will calculated the result based on expectation of winning computed using the cards on table and our hands.
+
+
+
 Challenge
 ---
 Since playing poker game is a continuous motion, it's hard to use only the face image extract from one frame to predict the winning rate. The message from a player's face should be a sequence of motion. Therefore, during our training, we found that the training loss has dropped, but the validation loss tends to vibrate around 50%, meaning that the predicted result is very unreliable.
