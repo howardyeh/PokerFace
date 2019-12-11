@@ -20,10 +20,10 @@ The other lambda function will be triggered when we publish the expected winning
 
 Steps
 ---
-Step 0 Install tensorflow on deeplens.
-Step 1 Created a project on deeplens and use pre-trained face-detection model as imported model and created lambda function  called deeplens_face_detection_and_pokerface.py using the python file in github repository /lambda_function.  
-Step 2 Put frozen_model.pb in S3 and copy the path and put in deeplens_face_detection_and_pokerface.py.
-Step 3 Created a lambda function called calculated.py triggered by pubished topic /expectation and this function will calculated the result based on expectation of winning computed using the cards on table and our hands.
+Step 0 Install tensorflow on deeplens.<br>
+Step 1 Created a project on deeplens and use pre-trained face-detection model as imported model and created lambda function  called deeplens_face_detection_and_pokerface.py using the python file in github repository /lambda_function.  <br>
+Step 2 Put frozen_model.pb in S3 and copy the path and put in deeplens_face_detection_and_pokerface.py.<br>
+Step 3 Created a lambda function called calculated.py triggered by pubished topic /expectation and this function will calculated the result based on expectation of winning computed using the cards on table and our hands.<br>`
 
 
 
